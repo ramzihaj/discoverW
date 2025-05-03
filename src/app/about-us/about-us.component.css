@@ -1,0 +1,27 @@
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+.card-body h4 {
+  color: #007bff;
+}
+
+.lead {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+ul li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.card {
+  border: none;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #93b8f0; /* bleu clair */
+}

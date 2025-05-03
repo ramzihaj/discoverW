@@ -1,1 +1,40 @@
-<p>contact works!</p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4">Contactez-nous</h2>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nom complet</label>
+              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="formData.name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Adresse email</label>
+              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="subject" class="form-label">Sujet</label>
+              <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="formData.subject" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea class="form-control" id="message" name="message" rows="5" [(ngModel)]="formData.message" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="contactForm.invalid">Envoyer</button>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="mt-4 text-center text-muted">
+        <p>Vous pouvez aussi nous envoyer un message à <strong>ramzi2020haj&#64;gmail.com</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
