@@ -22,13 +22,33 @@
   </div>
 </div>
 
+<!-- Filtres -->
+<div class="container mb-4">
+  <div class="row">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Filtrer par nom..." [(ngModel)]="filterNom"
+        (input)="applyFilter()">
+    </div>
+    <div class="col-md-6">
+      <select class="form-select" [(ngModel)]="filterContinent" (change)="applyFilter()">
+        <option value="">Tous les continents</option>
+        <option value="Europe">Europe</option>
+        <option value="Asie">Asie</option>
+        <option value="Afrique">Afrique</option>
+        <option value="Amérique">Amérique</option>
+        <option value="Océanie">Océanie</option>
+      </select>
+    </div>
+  </div>
+</div>
+
 <!-- Deux sections parallèles -->
 <div class="container">
   <div class="row">
     <!-- Partie gauche - 70% -->
     <div class="col-md-8">
-      <h3>Top 3 pays visités</h3>
-      <div *ngFor="let p of pays" class="card mb-3">
+      <h3>Top pays visités</h3>
+      <div *ngFor="let p of filteredPays" class="card mb-3 animate-card">
         <div class="row g-0">
           <div class="col-md-4">
             <img [src]="p.image" class="img-fluid rounded-start" alt="{{ p.nom }}">
@@ -37,15 +57,18 @@
             <div class="card-body">
               <h5 class="card-title">
                 <a [routerLink]="['/pays', p.id]">{{ p.nom }}</a>
+                <span class="badge bg-primary ms-2">{{ p.continent }}</span>
               </h5>
-              <p class="card-text">{{ p.description }}</p>
+              <p class="card-text">{{ p.description | slice:0:100 }}...</p>
+              <p class="card-text"><strong>Meilleur site : </strong>{{ p.meilleurSiteTouristique }}</p>
+              <p class="card-text"><small class="text-muted">Visiteurs : {{ p.visiteurs | number }}</small></p>
+              <button class="btn btn-outline-primary btn-sm" [routerLink]="['/edit-pays', p.id]">Modifier</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Partie droite - 30% -->
     <!-- Partie droite - 30% -->
     <div class="col-md-4">
       <h4>La Tunisie</h4>
@@ -60,7 +83,7 @@
       <!-- 🌍 Description touristique -->
       <div class="mt-3 p-3 bg-light rounded shadow-sm">
         <p class="mb-2">
-           Découvrez les merveilles de la Tunisie : des plages dorées de Djerba aux ruines antiques de Carthage, en
+          Découvrez les merveilles de la Tunisie : des plages dorées de Djerba aux ruines antiques de Carthage, en
           passant par les oasis du Sahara.
         </p>
         <p class="mb-0 text-primary fw-bold">
@@ -70,6 +93,7 @@
     </div>
   </div>
 </div>
+
 <!-- Footer -->
 <footer class="bg-primary text-white text-center text-lg-start mt-5 shadow-sm">
   <div class="container p-4">
@@ -78,7 +102,8 @@
       <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
         <h5 class="text-uppercase">DiscoverW</h5>
         <p>
-          Explorez le monde avec DiscoverW. Inspirez vos prochains voyages grâce à nos recommandations et destinations inoubliables.
+          Explorez le monde avec DiscoverW. Inspirez vos prochains voyages grâce à nos recommandations et destinations
+          inoubliables.
         </p>
       </div>
 

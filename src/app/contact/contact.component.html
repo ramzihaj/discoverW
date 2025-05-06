@@ -1,39 +1,52 @@
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <h2 class="text-center mb-4">Contactez-nous</h2>
+    <div class="col-lg-7">
+      <h1 class="text-center mb-4 fw-bold text-primary animate-header">Nous contacter</h1>
+      <p class="text-center text-muted mb-5">Envoyez-nous un message, nous vous répondrons dans les plus brefs délais.</p>
 
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
-            <div class="mb-3">
-              <label for="name" class="form-label">Nom complet</label>
-              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="formData.name" required>
+      <div class="card shadow-sm p-4 animate-section">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="mb-4">
+            <label for="name" class="form-label fw-bold">Nom complet</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Votre nom">
+            <div *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" class="text-danger">
+              Le nom est requis.
             </div>
+          </div>
 
-            <div class="mb-3">
-              <label for="email" class="form-label">Adresse email</label>
-              <input type="email" class="form-control" id="email" name="email" [(ngModel)]="formData.email" required>
+          <div class="mb-4">
+            <label for="email" class="form-label fw-bold">Adresse email</label>
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="votre.email@exemple.com">
+            <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="text-danger">
+              Veuillez entrer un email valide.
             </div>
+          </div>
 
-            <div class="mb-3">
-              <label for="subject" class="form-label">Sujet</label>
-              <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="formData.subject" required>
+          <div class="mb-4">
+            <label for="subject" class="form-label fw-bold">Sujet</label>
+            <input type="text" class="form-control" id="subject" formControlName="subject" placeholder="Objet de votre message">
+            <div *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched" class="text-danger">
+              Le sujet est requis.
             </div>
+          </div>
 
-            <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" name="message" rows="5" [(ngModel)]="formData.message" required></textarea>
+          <div class="mb-4">
+            <label for="message" class="form-label fw-bold">Message</label>
+            <textarea class="form-control" id="message" formControlName="message" rows="5" placeholder="Votre message ici..."></textarea>
+            <div *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched" class="text-danger">
+              Le message est requis.
             </div>
+          </div>
 
-            <button type="submit" class="btn btn-primary w-100" [disabled]="contactForm.invalid">Envoyer</button>
-          </form>
-
-        </div>
+          <button type="submit" class="btn btn-primary w-100 py-2" [disabled]="contactForm.invalid || isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Envoi...' : 'Envoyer' }}
+          </button>
+        </form>
       </div>
 
-      <div class="mt-4 text-center text-muted">
-        <p>Vous pouvez aussi nous envoyer un message à <strong>ramzi2020haj&#64;gmail.com</strong></p>
+      <div class="text-center mt-4 text-muted animate-section">
+        <p>Ou contactez-nous directement à <a href="mailto:ramzi2020haj@gmail.com" class="text-primary">ramzi2020haj&#64;gmail.com</a></p>
       </div>
     </div>
   </div>

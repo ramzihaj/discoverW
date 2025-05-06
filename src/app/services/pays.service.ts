@@ -12,7 +12,8 @@ export class PaysService {
       continent: 'Europe',
       visiteurs: 89000000,
       langues: ['Français'],
-      image: 'assets/france.jpg'
+      image: 'assets/france.jpg',
+      meilleurSiteTouristique: 'Tour Eiffel, Paris' // Nouveau champ
     },
     {
       id: '2',
@@ -21,7 +22,8 @@ export class PaysService {
       continent: 'Asie',
       visiteurs: 32000000,
       langues: ['Japonais'],
-      image: 'assets/japan.jpg'
+      image: 'assets/japan.jpg',
+      meilleurSiteTouristique: 'Mont Fuji, Yamanashi'
     },
     {
       id: '3',
@@ -30,7 +32,8 @@ export class PaysService {
       continent: 'Europe',
       visiteurs: 64000000,
       langues: ['Italien'],
-      image: 'assets/italy.jpg'
+      image: 'assets/italy.jpg',
+      meilleurSiteTouristique: 'Colisée, Rome'
     }
   ];
 
@@ -42,5 +45,25 @@ export class PaysService {
 
   getAllPays() {
     return this.pays;
+  }
+
+  addPays(newPays: any) {
+    this.pays.push({
+      id: newPays.id.toString(),
+      nom: newPays.nom,
+      description: newPays.description,
+      continent: newPays.continent || 'Non spécifié',
+      visiteurs: newPays.visiteurs || 0,
+      langues: newPays.langues || ['Non spécifié'],
+      image: newPays.image,
+      meilleurSiteTouristique: newPays.meilleurSiteTouristique || 'Non spécifié' // Gérer le nouveau champ
+    });
+  }
+
+  updatePays(id: string, updatedPays: any) {
+    const index = this.pays.findIndex(p => p.id === id);
+    if (index !== -1) {
+      this.pays[index] = { ...this.pays[index], ...updatedPays };
+    }
   }
 }

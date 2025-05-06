@@ -1,37 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // Pour ngModel
 import { RouterModule } from '@angular/router';
+import { PaysService } from '../services/pays.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  // Liste des pays (à adapter selon ton besoin)
-  pays = [
-    {
-      id: 1,
-      nom: 'France',
-      description: 'La France est célèbre pour la Tour Eiffel et sa gastronomie.',
-      image: 'assets/france.jpg'
-    },
-    {
-      id: 2,
-      nom: 'Japon',
-      description: 'Le Japon mélange modernité et tradition avec Tokyo et Kyoto.',
-      image: 'assets/japan.jpg'
-    },
-    {
-      id: 3,
-      nom: 'Italie',
-      description: 'L’Italie séduit par ses monuments historiques et sa cuisine.',
-      image: 'assets/italy.jpg'
-    }
-  ];
-
+export class HomeComponent implements OnInit {
+  pays: any[] = [];
+  filteredPays: any[] = [];
+  filterNom: string = '';
+  filterContinent: string = '';
   imagesSliderDroite = [
     'assets/slider1.jpg',
     'assets/slider2.jpg',
@@ -40,4 +24,19 @@ export class HomeComponent {
     'assets/slider5.jpg',
     'assets/slider6.jpeg'
   ];
+
+  constructor(private paysService: PaysService) {}
+
+  ngOnInit(): void {
+    this.pays = this.paysService.getAllPays();
+    this.filteredPays = [...this.pays]; // Copie initiale
+  }
+
+  applyFilter(): void {
+    this.filteredPays = this.pays.filter(p => {
+      const matchesNom = p.nom.toLowerCase().includes(this.filterNom.toLowerCase());
+      const matchesContinent = !this.filterContinent || p.continent === this.filterContinent;
+      return matchesNom && matchesContinent;
+    });
+  }
 }
